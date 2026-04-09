@@ -173,10 +173,11 @@ export function Features() {
                       feature.dark
                         ? "bg-[#F7F3EE] dark:bg-card-dark border-[var(--border)] dark:border-white/[0.06] hover:border-[var(--border-strong)] dark:hover:border-white/[0.12]"
                         : feature.accentCard
-                          ? "dark:bg-card border-[var(--border)] hover:border-[var(--border-strong)]"
+                          ? feature.accentBg === "#F0E8FF"
+                            ? "bg-[#F0E8FF] dark:bg-card border-[var(--border)] hover:border-[var(--border-strong)]"
+                            : "bg-[#E8F0FF] dark:bg-card border-[var(--border)] hover:border-[var(--border-strong)]"
                           : "bg-[#F7F3EE] dark:bg-card border-[var(--border)] hover:border-[var(--border-strong)]"
                     } hover:shadow-lg`}
-                    style={feature.accentCard ? { backgroundColor: feature.accentBg ?? "#E8F0FF" } : undefined}
                   >
                     {/* Accent gradient wash */}
                     <div
