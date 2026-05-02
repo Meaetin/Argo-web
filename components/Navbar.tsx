@@ -12,10 +12,6 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToWaitlist = () => {
-    document.getElementById("waitlist")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <header
       className={`navbar fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -51,12 +47,12 @@ export function Navbar() {
 
         <div className="navbar-controls flex items-center gap-3">
           <DarkModeToggle />
-          <button
-            onClick={scrollToWaitlist}
-            className="navbar-cta cursor-pointer bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-[var(--brand-foreground)] font-light text-xs tracking-[0.15em] px-6 py-2.5 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[var(--brand)] focus-visible:outline-offset-2"
+          <a
+            href="#waitlist"
+            className="navbar-cta bg-[var(--brand)] hover:bg-[var(--brand-hover)] text-[var(--brand-foreground)] font-light text-xs tracking-[0.15em] px-6 py-2.5 rounded-full transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-[var(--brand)] focus-visible:outline-offset-2"
           >
             Join Waitlist
-          </button>
+          </a>
         </div>
       </div>
     </header>

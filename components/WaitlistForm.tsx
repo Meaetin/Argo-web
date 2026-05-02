@@ -14,7 +14,7 @@ export function WaitlistForm({ variant = "hero" }: WaitlistFormProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -24,12 +24,28 @@ export function WaitlistForm({ variant = "hero" }: WaitlistFormProps) {
     }
 
     setLoading(true);
-    // Simulate async — wire to Resend / Supabase later
-    setTimeout(() => {
-      localStorage.setItem("argo_waitlist_email", email);
-      setLoading(false);
+
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok && res.status !== 409) {
+        setError(data.error || "Something went wrong. Please try again.");
+        return;
+      }
+
       setSubmitted(true);
-    }, 600);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
@@ -66,7 +82,7 @@ export function WaitlistForm({ variant = "hero" }: WaitlistFormProps) {
       className="waitlist-form flex flex-col sm:flex-row gap-3"
       noValidate
     >
-      <div className="waitlist-input-wrapper flex-1 min-w-0">
+      <div className="waitlist-input-wrapper relative flex-1 min-w-0">
         <label htmlFor={`email-${variant}`} className="sr-only">
           Email address
         </label>
@@ -92,7 +108,7 @@ export function WaitlistForm({ variant = "hero" }: WaitlistFormProps) {
         {error && (
           <p
             id={`email-error-${variant}`}
-            className="waitlist-error mt-1.5 text-xs text-red-500"
+            className="waitlist-error absolute left-5 top-full mt-1 text-xs text-red-500"
           >
             {error}
           </p>

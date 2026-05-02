@@ -65,7 +65,7 @@ export function Hero() {
             </ScrollReveal>
 
             <ScrollReveal delay={2}>
-              <div className="hero-form-wrapper max-w-md w-full" id="waitlist">
+              <div className="hero-form-wrapper max-w-md w-full">
                 <WaitlistForm variant="hero" />
                 <p className="hero-form-note mt-3 text-xs text-[var(--foreground-subtle)]">
                   No credit card required. Be the first to try Argo.
